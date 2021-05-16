@@ -33,3 +33,8 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route('/about')
+@login_required
+def about():
+    return render_template('about.html')
