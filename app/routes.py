@@ -34,7 +34,10 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/about')
+@app.route('/about', methods=['GET', 'POST'])
 @login_required
 def about():
+    app.logger.info(request.form)
+    if "bomb" in request.form:
+        return render_template('bomb.html')
     return render_template('about.html')
