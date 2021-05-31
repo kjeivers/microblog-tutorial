@@ -4,11 +4,11 @@
     <h1>Hi, {{ current_user.username }}!</h1>
     {% for post in posts %}
     <div>
-        <p>
+        <p style="display: inline-block">
             <img src="{{ current_user.avatar(20) }}">
             {{ post.author.username }} says: <b>{{ post.body }}</b>
-            <form id="delete{{ post.id }}" action="post/{{ post.id }}/delete" method="post">
-                <input type="submit" form="delete{{ post.id }}" value="Delete"/>
+            <form id="delete{{ post.id }}" action="post/{{ post.id }}/delete" method="post" style="display: inline-block">
+                <input type="submit" form="delete{{ post.id }}" value="Delete" style="margin-left: 10px"/>
             </form>
         </p>
     </div>

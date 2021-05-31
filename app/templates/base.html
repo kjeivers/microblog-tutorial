@@ -1,7 +1,20 @@
 <html>
 <head>
     <style>
-        p { font-family: "Comic Sans MS", cursive;}
+        html { overflow-x: hidden; }
+        p,h1 { font-family: "Comic Sans MS", cursive;}
+        body {
+            margin: 0;
+        }
+        div.top {
+            width: 100%;
+            background-color: #cccccc;
+        }
+        div.top, div.bottom {
+            padding-left: 15px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
     </style>
     {% if title %}
     <title>{{ title }} - microblog</title>
@@ -10,27 +23,29 @@
     {% endif %}
 </head>
 <body>
-<div>
-    Microblog:
-    <a href="{{ url_for('index') }}">Home</a>
-    <a href="{{ url_for('about') }}">About</a>
-    {% if current_user.is_anonymous %}
-    <a href="{{ url_for('login') }}">Login</a>
-    {% else %}
-    <a href="{{ url_for('user') }}">User</a>
-    <a href="{{ url_for('logout') }}">Logout</a>
-    {% endif %}
-</div>
-<hr>
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
-{% block content %}{% endblock %}
+    <div class="top">
+        Microblog:
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('login') }}">Login</a>
+        {% else %}
+        <a href="{{ url_for('user') }}">User</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
+    </div>
+    <div class="bottom">
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
 </body>
 </html>
