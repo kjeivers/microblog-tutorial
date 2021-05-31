@@ -32,9 +32,9 @@ def newpost():
 @login_required
 def deletePost(id):
     post = Post.query.get(id)
-    # TODO check post belongs to current_user
-    db.session.delete(post)
-    db.session.commit()
+    if post.user_id == current_user.id:
+        db.session.delete(post)
+        db.session.commit()
     return redirect(url_for('user'))
 
 @app.route('/login', methods=['GET', 'POST'])
