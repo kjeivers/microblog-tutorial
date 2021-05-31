@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <img src="{{ current_user.avatar(128) }}">
     <h1>Hi, {{ current_user.username }}!</h1>
     {% for post in posts %}
-    <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
+    <div><p>
+        <img src="{{ post.author.avatar(20) }}">
+        {{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
     {% endfor %}
 
 {% endblock %}
