@@ -6,12 +6,18 @@ from werkzeug.urls import url_parse
 from app.models import User, Post
 
 @app.route('/')
-@app.route('/index', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET'])
 @login_required
 def index():
+    posts = Post.query.all()
+    return render_template('index.html', title='Home Page', posts=posts)
+
+@app.route('/user', methods=['GET'])
+@login_required
+def user():
     form = NewPostForm()
     posts = Post.query.filter_by(user_id=current_user.id)
-    return render_template('index.html', title='Home Page', posts=posts, form=form)
+    return render_template('user.html', title='Current User Page', posts=posts, form=form)
 
 @app.route('/newpost', methods=['POST'])
 @login_required
@@ -20,7 +26,7 @@ def newpost():
     post = Post(body=form.text.data, user_id=current_user.id)
     db.session.add(post)
     db.session.commit()
-    return redirect(url_for('index'))
+    return redirect(url_for('user'))
 
 
 @app.route('/login', methods=['GET', 'POST'])

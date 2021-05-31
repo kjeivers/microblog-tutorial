@@ -6,4 +6,13 @@
     <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
     {% endfor %}
 
+    <form action="newpost" method = "POST" novalidate>
+        <p>
+            {{ form.text.label }}<br>
+            {{ form.text(size=50) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+
 {% endblock %}
