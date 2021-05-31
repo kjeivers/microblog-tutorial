@@ -3,11 +3,13 @@
 {% block content %}
     <h1>Hi, {{ current_user.username }}!</h1>
     {% for post in posts %}
-
-    <div style="flow">
+    <div>
         <p>
             <img src="{{ current_user.avatar(20) }}">
             {{ post.author.username }} says: <b>{{ post.body }}</b>
+            <form id="delete{{ post.id }}" action="post/{{ post.id }}/delete" method="post">
+                <input type="submit" form="delete{{ post.id }}" value="Delete"/>
+            </form>
         </p>
     </div>
     {% endfor %}
