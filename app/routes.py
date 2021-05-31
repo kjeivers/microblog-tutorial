@@ -1,16 +1,27 @@
-from app import app
-from app.forms import LoginForm
+from app import app, db
+from app.forms import LoginForm, NewPostForm
 from flask import render_template, flash, redirect, request, url_for
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app.models import User, Post
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
+    form = NewPostForm()
     posts = Post.query.filter_by(user_id=current_user.id)
-    return render_template('index.html', title='Home Page', posts=posts)
+    return render_template('index.html', title='Home Page', posts=posts, form=form)
+
+@app.route('/newpost', methods=['POST'])
+@login_required
+def newpost():
+    form = NewPostForm(request.form)
+    post = Post(body=form.text.data, user_id=current_user.id)
+    db.session.add(post)
+    db.session.commit()
+    return redirect(url_for('index'))
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
